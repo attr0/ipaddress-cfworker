@@ -16,19 +16,19 @@ Visit  https://ip.hlz.ink
 
 ## Console
 
-  Just type
+ Just type
 
 ```bash
 curl ip.hlz.ink
 ```
 
-want more detail?
+Want more detail?
 
 ```
 curl ip.hlz.ink/json
 ```
 
-want more more detail?
+Want more more detail?
 
 ```
 curl ip.hlz.ink/jsonall
