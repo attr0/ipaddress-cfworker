@@ -46,8 +46,8 @@ addEventListener('fetch', event => {
             const isHeadless = checkUA(request)
             if (isHeadless.is) return respondText(request, isHeadless.changeLine)
         case '/index.html':
-        case '/index.css':
-        case '/index.js':
+        case '/main.css':
+        case '/main.js':
         case '/favicon.ico':
             return handlePage(request)
 
