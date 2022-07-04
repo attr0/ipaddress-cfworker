@@ -29,9 +29,9 @@ async function handleRequest(request) {
 
     // Router
     switch (pathname) {
-        case '/json':
+        case '/json/cf':
             return respondJson(request)
-        case '/jsonall':
+        case '/json/ipinfo':
             return respondJsonAll(request)
         case '/cf':
             return respondJsonCf(request)
