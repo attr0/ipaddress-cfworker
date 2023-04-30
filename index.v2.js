@@ -275,7 +275,7 @@ async function respondJsonIPINFO(request, ip = null) {
     }
 
     try {
-        const ipinfo_data = await fetchHandler("http://ipinfo.io/" + ip + "?api-key=" + IPINFO_TOKEN)
+        const ipinfo_data = await fetchHandler("http://ipinfo.io/" + ip + "?token=" + IPINFO_TOKEN)
         if (ipinfo_data == null) return makeJsonResponse(null)
 
         const asnRegx = /AS(?<grp0>[^\D]+) /
@@ -312,7 +312,7 @@ async function respondJsonIPDATA(request, ip = null) {
     }
 
     try {
-        const ipdata_data = await fetchHandler("https://api.ipdata.co/" + ip + "?token=" + IPDATA_TOKEN)
+        const ipdata_data = await fetchHandler("https://api.ipdata.co/" + ip + "?api-key=" + IPDATA_TOKEN)
         if (ipdata_data == null) return makeJsonResponse(null)
 
         const res = {
@@ -322,9 +322,9 @@ async function respondJsonIPDATA(request, ip = null) {
             "country": ipdata_data["country_name"],
             "countryCode": ipdata_data["country_code"],  
             // 先维后经
-            "latitude": ipdata_data["latitude"],
-            "longitude": ipdata_data["longitude"],
-            "asn": ipdata_data["asn"]["name"],
+            "latitude": Math.parse(ipdata_data["latitude"]).toFixed(2),
+            "longitude": Math.parse(ipdata_data["longitude"]).toFixed(2),
+            "asn": ipdata_data["asn"]["asn"] + " " + ipdata_data["asn"]["name"],
             "asnCode": ipdata_data["asn"]["asn"],
             "timezone": ipdata_data["time_zone"]["name"],
         }
