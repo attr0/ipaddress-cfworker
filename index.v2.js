@@ -6,6 +6,7 @@
  * Environment Variable Requirement
  * - ASSET_URL
  * - IPINFO_TOKEN
+ * - IPDATA_TOKEN
  */
 
 
@@ -31,6 +32,8 @@ addEventListener('fetch', event => {
     switch (pathname) {
         // api
         case '/json':
+        case '/json/ipdata':
+            return respondJsonIPDATA(request)
         case '/json/ipinfo':
             return respondJsonIPINFO(request)
         case '/json/cf':
@@ -231,7 +234,7 @@ function testIPFormat(ip) {
  async function respondQuery(request, path) {
     const ipAddrReg = new RegExp("/query/(\\S*)")
     const ip = ipAddrReg.exec(path)[1]
-    return respondJsonIPINFO(request, ip)
+    return respondJsonIPDATA(request, ip)
 }
 
 /**
@@ -294,5 +297,40 @@ async function respondJsonIPINFO(request, ip = null) {
         return makeJsonResponse(null)
     }
 
-   
+}
+
+/**
+ * Get Client Region Name
+ * @param {IncomingRequestCfProperties} cf
+ * @param {String} ip
+ * 
+ */
+async function respondJsonIPDATA(request, ip = null) {
+    // set ip address
+    if(ip == null) {
+        ip = request.headers.get("CF-Connecting-IP")
+    }
+
+    try {
+        const ipdata_data = await fetchHandler("https://api.ipdata.co/" + ip + "?token=" + IPDATA_TOKEN)
+        if (ipdata_data == null) return makeJsonResponse(null)
+
+        const res = {
+            "ip": ip,
+            "city": ipdata_data["city"],
+            "region": ipdata_data["region"],
+            "country": ipdata_data["country_name"],
+            "countryCode": ipdata_data["country_code"],  
+            // 先维后经
+            "latitude": ipdata_data["latitude"],
+            "longitude": ipdata_data["longitude"],
+            "asn": ipdata_data["asn"]["name"],
+            "asnCode": ipdata_data["asn"]["asn"],
+            "timezone": ipdata_data["time_zone"]["name"],
+        }
+        return makeJsonResponse(res)
+    } catch (error) {
+        return makeJsonResponse(null)
+    }
+
 }

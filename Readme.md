@@ -4,6 +4,24 @@ Get your public IP address information.
 
 
 ## Access
+
+### Entry
+
+- `/`
+    Default response. Only IP address will be returned
+- `/json`
+    Default json encoded IP information. (ipdata is selected by now)
+- `/json/ipdata`
+    Json encoded IP information provided by [ipdata.co](https://ipdata.co/)
+- `/json/ipinfo`
+    Json encoded IP information provided by [ipinfo.io](https://ipinfo.io/)
+- `/json/cf`
+    Json encoded IP information provided by [Cloudfare](https://cloudflare.com/)
+- `/cf`
+    Json encoded cloudflare IP related information
+
+
+
 ### Web
 
 Use your browser to visit: https://ip.hlz.ink
@@ -41,9 +59,13 @@ In addition, you can ask for the information of a given ip by
 curl ip.hlz.ink/query/{ip_address}
 ```
 
+
+
 ## How to deploy your own one
 
 To-Do
+
+
 
 ## Thanks
 
