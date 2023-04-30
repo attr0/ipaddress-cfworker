@@ -67,3 +67,5 @@ To-Do
 ![ipinfo](img/ipinfo.png)
 
 ![](img/ipdata.png)
+
+![](/img/ipgeolocation.png)
