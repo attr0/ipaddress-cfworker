@@ -72,3 +72,5 @@ To-Do
 ![cloudflare-worker](img/cloudflare-worker.png)
 
 ![ipinfo](img/ipinfo.png)
+
+![](img/ipdata.png)
