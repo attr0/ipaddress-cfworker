@@ -275,7 +275,7 @@ async function respondJsonIPINFO(request, ip = null) {
     }
 
     try {
-        const ipinfo_data = await fetchHandler("http://ipinfo.io/" + ip + "?token=" + IPINFO_TOKEN)
+        const ipinfo_data = await fetchHandler("http://ipinfo.io/" + ip + "?api-key=" + IPINFO_TOKEN)
         if (ipinfo_data == null) return makeJsonResponse(null)
 
         const asnRegx = /AS(?<grp0>[^\D]+) /
