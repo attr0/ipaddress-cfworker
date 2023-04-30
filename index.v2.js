@@ -32,6 +32,8 @@ addEventListener('fetch', event => {
     switch (pathname) {
         // api
         case '/json':
+        case '/json/ipgeo':
+            return respondJsonIPGEO(request)
         case '/json/ipdata':
             return respondJsonIPDATA(request)
         case '/json/ipinfo':
@@ -322,11 +324,47 @@ async function respondJsonIPDATA(request, ip = null) {
             "country": ipdata_data["country_name"],
             "countryCode": ipdata_data["country_code"],  
             // 先维后经
-            "latitude": Math.parse(ipdata_data["latitude"]).toFixed(2),
-            "longitude": Math.parse(ipdata_data["longitude"]).toFixed(2),
+            "latitude": parseFloat(ipdata_data["latitude"]).toFixed(4),
+            "longitude": parseFloat(ipdata_data["longitude"]).toFixed(4),
             "asn": ipdata_data["asn"]["asn"] + " " + ipdata_data["asn"]["name"],
             "asnCode": ipdata_data["asn"]["asn"],
             "timezone": ipdata_data["time_zone"]["name"],
+        }
+        return makeJsonResponse(res)
+    } catch (error) {
+        return makeJsonResponse(null)
+    }
+
+}
+
+/**
+ * Get Client Region Name
+ * @param {IncomingRequestCfProperties} cf
+ * @param {String} ip
+ * 
+ */
+async function respondJsonIPGEO(request, ip = null) {
+    // set ip address
+    if(ip == null) {
+        ip = request.headers.get("CF-Connecting-IP")
+    }
+
+    try {
+        const ipgeo_data = await fetchHandler("https://api.ipgeolocation.io/ipgeo?apiKey=" + IPGEO_TOKEN + "&ip=" + ip)
+        if (ipgeo_data == null) return makeJsonResponse(null)
+
+        const res = {
+            "ip": ip,
+            "city": ipgeo_data["city"],
+            "region": ipgeo_data["state_prov"],
+            "country": ipgeo_data["country_name"],
+            "countryCode": ipgeo_data["country_code2"],  
+            // 先维后经
+            "latitude": parseFloat(ipgeo_data["latitude"]).toFixed(4),
+            "longitude": parseFloat(ipgeo_data["longitude"]).toFixed(4),
+            "asn": "AS"+request.cf["asn"] + " " + ipgeo_data["isp"],
+            "asnCode": "AS"+request.cf["asn"],
+            "timezone": ipgeo_data["time_zone"]["name"],
         }
         return makeJsonResponse(res)
     } catch (error) {

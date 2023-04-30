@@ -10,7 +10,9 @@ Get your public IP address information.
 - `/`
     Default response. Only IP address will be returned
 - `/json`
-    Default json encoded IP information. (ipdata is selected by now)
+    Default json encoded IP information. (ipgeolocation is selected by now)
+- `/json/ipgeo`
+    Json encoded IP information provided by [ipgeolocation.io](https://ipgeolocation.io/)
 - `/json/ipdata`
     Json encoded IP information provided by [ipdata.co](https://ipdata.co/)
 - `/json/ipinfo`
@@ -38,19 +40,10 @@ Use `curl` to get your ip infomration on a headless machine
 curl ip.hlz.ink
 ```
 
-More detail? (Use [ipinfo.io](https://ipinfo.io) database) 
+Want detail?
 
 ```bash
 curl ip.hlz.ink/json
-
-# equal to
-curl ip.hlz.ink/json/ipinfo
-```
-
-Also, you can use cloudflare database
-
-```bash
-curl ip.hlz.ink/json/cf
 ```
 
 In addition, you can ask for the information of a given ip by
