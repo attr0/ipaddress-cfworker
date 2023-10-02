@@ -9,16 +9,26 @@ Get your public IP address information.
 
 - `/`
     Default response. Only IP address will be returned
+    
 - `/json`
     Default json encoded IP information. (ipgeolocation is selected by now)
+    
 - `/json/ipgeo`
     Json encoded IP information provided by [ipgeolocation.io](https://ipgeolocation.io/)
+    
 - `/json/ipdata`
     Json encoded IP information provided by [ipdata.co](https://ipdata.co/)
+    
 - `/json/ipinfo`
     Json encoded IP information provided by [ipinfo.io](https://ipinfo.io/)
+    
 - `/json/cf`
     Json encoded IP information provided by [Cloudfare](https://cloudflare.com/)
+    
+- `/json/ip2location`
+
+    Json encoded IP information provided by [IP2Location.io](https://www.ip2location.io)
+
 - `/cf`
     Json encoded cloudflare IP related information
 
